@@ -1,4 +1,4 @@
-package com.example.spring_demo_one;
+package com.bitinbyte.springdemo;
 
 public class BaseballCoach implements Coach {
 
