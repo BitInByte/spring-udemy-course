@@ -1,5 +1,8 @@
 package com.bitinbyte.hibernate.demo;
 
+import com.bitinbyte.hibernate.demo.entity.Review;
+import com.bitinbyte.hibernate.demo.entity.Student;
+import com.bitinbyte.hibernate.demo.entity.Course;
 import com.bitinbyte.hibernate.demo.entity.Instructor;
 import com.bitinbyte.hibernate.demo.entity.InstructorDetail;
 
@@ -8,14 +11,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 /**
- * CreateStudentDemo
+ * AddCoursesForMaryDemo
  */
-public class GetInstructorDetailDemo {
+public class GetCoursesForMaryDemo {
 
     public static void main(String[] args) {
         // Create session factory
         SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Instructor.class)
-                .addAnnotatedClass(InstructorDetail.class).buildSessionFactory();
+                .addAnnotatedClass(InstructorDetail.class).addAnnotatedClass(Course.class)
+                .addAnnotatedClass(Review.class).addAnnotatedClass(Student.class).buildSessionFactory();
 
         // Create session
         Session session = factory.getCurrentSession();
@@ -23,26 +27,18 @@ public class GetInstructorDetailDemo {
         try {
             // Start a transaction
             session.beginTransaction();
-
-            // Get the instructor detail object
-            int theId = 2;
-            InstructorDetail tempInstructorDetail = session.get(InstructorDetail.class, theId);
-
-            // Print the instructor detail
-            System.out.println("tempInstructorDetail: " + tempInstructorDetail);
-
-            // Print the associated instructor
-            System.out.println("the associated instructor: " + tempInstructorDetail.getInstructor());
-
+            // Get the student mary from database
+            int studentId = 1;
+            Student tempStudent = session.get(Student.class, studentId);
+            System.out.println("\nLoaded student: " + tempStudent);
+            System.out.println("Courses: " + tempStudent.getCourses());
             // Commit transaction
             session.getTransaction().commit();
 
             System.out.println("Done!");
 
-        } catch (Exception exc) {
-            exc.printStackTrace();
         } finally {
-            // Handle connection leak issue via record not found
+            // Add clean up code
             session.close();
             factory.close();
         }

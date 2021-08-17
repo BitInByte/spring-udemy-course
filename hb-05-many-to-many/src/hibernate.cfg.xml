@@ -10,7 +10,8 @@
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <!-- <property name="connection.url">jdbc:postgresql://localhost:5432/hb_student_tracker?ssl=false&amp;serverTimezone=UTC</property> -->
         <!-- <property name="connection.url">jdbc:postgresql://localhost:5432/hb-03-one-to-many?ssl=false&amp;serverTimezone=UTC</property> -->
-        <property name="connection.url">jdbc:postgresql://localhost:5432/hb-04-one-to-many-uni?ssl=false&amp;serverTimezone=UTC</property>
+        <!-- <property name="connection.url">jdbc:postgresql://localhost:5432/hb-04-one-to-many-uni?ssl=false&amp;serverTimezone=UTC</property> -->
+        <property name="connection.url">jdbc:postgresql://localhost:5432/hb-05-many-to-many?ssl=false&amp;serverTimezone=UTC</property>
         <property name="connection.username">postgres</property>
         <property name="connection.password">postgres</property>
 
