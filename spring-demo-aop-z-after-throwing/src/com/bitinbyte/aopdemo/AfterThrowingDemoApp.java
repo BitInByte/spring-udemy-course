@@ -3,14 +3,13 @@ package com.bitinbyte.aopdemo;
 import java.util.List;
 
 import com.bitinbyte.aopdemo.dao.AccountDAO;
-import com.bitinbyte.aopdemo.dao.MembershipDAO;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
- * AfterReturningDemoApp
+ * AfterThrowingDemoApp
  */
-public class AfterReturningDemoApp {
+public class AfterThrowingDemoApp {
 
     public static void main(String[] args) {
         // Read spring config java class
@@ -18,9 +17,17 @@ public class AfterReturningDemoApp {
         // Get the bean from spring container
         AccountDAO theAccountDAO = context.getBean("accountDAO", AccountDAO.class);
         // Call method to find the accounts
-        List<Account> theAccounts = theAccountDAO.findAccounts();
+        List<Account> theAccounts = null;
+        try {
+            // Add a boolean flag to simulate exceptions
+            boolean tripWire = true;
+            theAccounts = theAccountDAO.findAccounts(tripWire);
+        } catch (Exception exc) {
+            System.out.println("\n\nMain Program ... caught exception: " + exc);
+        }
+
         // Display the accounts
-        System.out.println("\n\nMain Program: AfterReturningDemoApp");
+        System.out.println("\n\nMain Program: AfterThrowingDemoApp");
         System.out.println("----");
         System.out.println(theAccounts);
         System.out.println("\n");

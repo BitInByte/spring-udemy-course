@@ -6,6 +6,7 @@ import com.bitinbyte.aopdemo.Account;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -20,6 +21,17 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(2)
 public class MyDemoLoggingAspect {
+
+    @AfterThrowing(pointcut = "execution(* com.bitinbyte.aopdemo.dao.AccountDAO.findAccounts(..))", throwing = "theExc")
+    public void afterThrowingFindAccountsAdvice(JoinPoint theJoinPoint, Throwable theExc) {
+
+        // Print out which method we are advising on
+        String method = theJoinPoint.getSignature().toShortString();
+        System.out.println("\n=====>>> Executing @AfterThrowing on method: " + method);
+        // Log the exception
+        System.out.println("\n=====>>> The exception is: " + theExc);
+
+    }
 
     // Add a new advice for @AferReturning on the findAccounts method
     @AfterReturning(pointcut = "execution(* com.bitinbyte.aopdemo.dao.AccountDAO.findAccounts(..))", returning = "result")
