@@ -1,8 +1,11 @@
 package com.bitinbyte.aopdemo.aspect;
 
+import java.util.List;
+
 import com.bitinbyte.aopdemo.Account;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -17,6 +20,31 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(2)
 public class MyDemoLoggingAspect {
+
+    // Add a new advice for @AferReturning on the findAccounts method
+    @AfterReturning(pointcut = "execution(* com.bitinbyte.aopdemo.dao.AccountDAO.findAccounts(..))", returning = "result")
+    public void afterReturningFindAccountAdvice(JoinPoint theJoinPoint, List<Account> result) {
+        // Print out which method we are advising on
+        String method = theJoinPoint.getSignature().toShortString();
+        System.out.println("\n=====>>> Executing @AfterReturning on method: " + method);
+        // Print out the results of the method call
+        System.out.println("\n=====>>> result is: " + result);
+
+        // Let's post-process the data ... let's modify it :-)
+        // Convert the account names to uppercase
+        convertAccountNamesToUppercase(result);
+        System.out.println("\n=====>>> result is: " + result);
+    }
+
+    private void convertAccountNamesToUppercase(List<Account> result) {
+        // Loop through accounts
+        for (Account tempAccount : result) {
+            // Get uppercase version of name
+            String theUpperName = tempAccount.getName().toUpperCase();
+            // Update the name on the account
+            tempAccount.setName(theUpperName);
+        }
+    }
 
     @Before("com.bitinbyte.aopdemo.aspect.LuvAopExpressions.forDaoPackageNoGetterSetter()")
     public void beforeAddAccountAdvice(JoinPoint theJoinPoint) {
