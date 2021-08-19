@@ -5,6 +5,7 @@ import java.util.List;
 import com.bitinbyte.aopdemo.Account;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -21,6 +22,15 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(2)
 public class MyDemoLoggingAspect {
+
+    @After("execution(* com.bitinbyte.aopdemo.dao.AccountDAO.findAccounts(..))")
+    public void afterFinallyFindAccountsAdvice(JoinPoint theJoinPoint) {
+
+        // Print out which method we are advising on
+        String method = theJoinPoint.getSignature().toShortString();
+        System.out.println("\n=====>>> Executing @After (finally) on method: " + method);
+
+    }
 
     @AfterThrowing(pointcut = "execution(* com.bitinbyte.aopdemo.dao.AccountDAO.findAccounts(..))", throwing = "theExc")
     public void afterThrowingFindAccountsAdvice(JoinPoint theJoinPoint, Throwable theExc) {
