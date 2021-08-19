@@ -19,9 +19,15 @@ public class MyDemoLoggingAspect {
     // com.bitinbyte.aopdemo.dao.AccountDAO.addAccount())")
     // @Before("execution(public void add*())")
     // @Before("execution(void add*())")
-    @Before("execution(* add*())")
+    // @Before("execution(* add*())")
+    // @Before("execution(* add*(com.bitinbyte.aopdemo.Account))")
+    // @Before("execution(* add*(Account))")
+    // @Before("execution(* add*(com.bitinbyte.aopdemo.Account, ..))")
+    // @Before("execution(* add*(..))")
+    @Before("execution(* com.bitinbyte.aopdemo.dao.*.*(..))")
     public void beforeAddAccountAdvice() {
         // System.out.println("\n=====>>> Executing @Before advice on addAccount()");
         System.out.println("\n=====>>> Executing @Before advice on method");
     }
+
 }
